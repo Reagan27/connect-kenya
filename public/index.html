@@ -1,0 +1,2343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect Kenya - Community Events Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #1e3c72;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            color: #e74c3c;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1e3c72;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+        }
+
+        .btn-secondary {
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+        }
+
+        
+        .hero {
+            padding: 150px 0 100px;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #f0f8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-width: 200px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #e74c3c;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+     
+        .main-content {
+            background: white;
+            border-radius: 30px 30px 0 0;
+            margin-top: -50px;
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+        }
+
+       
+        .filter-section {
+            padding: 4rem 0 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 30px 30px 0 0;
+        }
+
+        .filter-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-group {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .filter-group select, .filter-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-group select:focus, .filter-group input:focus {
+            outline: none;
+            border-color: #1e3c72;
+        }
+
+       
+        .events-section {
+            padding: 3rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        .event-card.pending {
+            opacity: 0.7;
+            border: 2px dashed #ffc107;
+        }
+
+        .event-card.vip {
+            border: 3px solid #e74c3c;
+            box-shadow: 0 0 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .vip-badge {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            background: #e74c3c;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            z-index: 10;
+        }
+
+        .event-image {
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            position: relative;
+        }
+
+        .event-category {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(231, 76, 60, 0.9);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .event-status {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #ffc107;
+            color: #000;
+        }
+
+        .status-approved {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-rejected {
+            background: #dc3545;
+            color: white;
+        }
+
+        .event-content {
+            padding: 1.5rem;
+        }
+
+        .event-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .event-location {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .event-description {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .event-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .event-date {
+            background: #e8f4f8;
+            color: #1e3c72;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .event-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #e74c3c;
+        }
+
+        .event-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .event-organizer {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .organizer-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .btn-join {
+            background: #28a745;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-join:hover {
+            background: #218838;
+            transform: scale(1.05);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 2% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #1e3c72;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .auth-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .auth-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #1e3c72;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+       
+        .admin-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #1a252f;
+            padding: 2rem 1rem;
+            z-index: 1500;
+        }
+
+        .admin-content {
+            margin-left: 250px;
+            padding: 2rem;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-nav a {
+            color: #ccc;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-nav a:hover, .sidebar-nav a.active {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .dashboard-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-dashboard {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-dashboard h3 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+      
+        .payment-info {
+            background: #e8f5e8;
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .payment-info h4 {
+            color: #155724;
+            margin-bottom: 1rem;
+        }
+
+        .mpesa-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #28a745;
+            text-align: center;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px dashed #28a745;
+        }
+
+      
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .action-btn {
+            padding: 5px 10px;
+            margin: 2px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .btn-approve {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-reject {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-vip {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-edit {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #6c757d;
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .filter-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .admin-sidebar.open {
+                transform: translateX(0);
+            }
+
+            .admin-content {
+                margin-left: 0;
+            }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .alert {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .categories-section {
+            padding: 3rem 0;
+            background: #f8f9fa;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .category-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #1e3c72;
+        }
+
+        .category-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-count {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            background: #1a252f;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #e74c3c;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="auth-container" >
+        <div class="auth-form">
+            <h2 class="auth-title">
+                <i class="fas fa-users" style="color: #e74c3c;"></i>
+                Connect Kenya
+            </h2>
+            <div id="authAlert"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; margin-bottom: 1rem;">Login</button>
+                <p style="text-align: center; color: #666;">
+                    Don't have an account? 
+                    <a href="#" onclick="showRegister()" style="color: #1e3c72; font-weight: 600;">Register here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    
+    <div id="registerScreen" class="auth-container hidden" >
+        <div class="auth-form">
+            <h2 class="auth-title">
+                <i class="fas fa-user-plus" style="color: #e74c3c;"></i>
+                Register
+            </h2>
+            <div id="registerAlert"></div>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">Full Name</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPhone">Phone Number</label>
+                    <input type="tel" id="registerPhone" placeholder="+254..." required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; margin-bottom: 1rem;">Register</button>
+                <p style="text-align: center; color: #666;">
+                    Already have an account? 
+                    <a href="#" onclick="showLogin()" style="color: #1e3c72; font-weight: 600;">Login here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="hidden">
+        <div class="admin-sidebar">
+            <div class="logo" style="color: white; margin-bottom: 2rem;">
+                <i class="fas fa-users"></i>
+                Admin Panel
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="#" onclick="showAdminSection('dashboard')" class="active">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a></li>
+                <li><a href="#" onclick="showAdminSection('events')">
+                    <i class="fas fa-calendar"></i> Events
+                </a></li>
+                <li><a href="#" onclick="showAdminSection('users')">
+                    <i class="fas fa-users"></i> Users
+                </a></li>
+                <li><a href="#" onclick="showAdminSection('pending')">
+                    <i class="fas fa-clock"></i> Pending Approval
+                    <span id="pendingCount" style="background: #e74c3c; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; margin-left: auto;"></span>
+                </a></li>
+                <li><a href="#" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a></li>
+            </ul>
+        </div>
+        <div class="admin-content">
+            <div id="adminAlert"></div>
+
+            <!-- Dashboard Overview -->
+            <div id="adminDashboardView">
+                <h1>Dashboard Overview</h1>
+                <div class="dashboard-stats">
+                    <div class="stat-dashboard">
+                        <h3 id="totalEvents">0</h3>
+                        <p>Total Events</p>
+                    </div>
+                    <div class="stat-dashboard" style="background: linear-gradient(45deg, #28a745, #20c997);">
+                        <h3 id="approvedEvents">0</h3>
+                        <p>Approved Events</p>
+                    </div>
+                    <div class="stat-dashboard" style="background: linear-gradient(45deg, #ffc107, #fd7e14);">
+                        <h3 id="pendingEvents">0</h3>
+                        <p>Pending Events</p>
+                    </div>
+                    <div class="stat-dashboard" style="background: linear-gradient(45deg, #e74c3c, #dc3545);">
+                        <h3 id="vipEvents">0</h3>
+                        <p>VIP Events</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Recent Activities</h3>
+                    <div id="recentActivities"></div>
+                </div>
+            </div>
+
+           
+            <div id="adminEventsView" class="hidden">
+                <h1>Events Management</h1>
+                <div class="dashboard-card">
+                    <div class="table-container">
+                        <table id="eventsTable">
+                            <thead>
+                                <tr>
+                                    <th>Event Name</th>
+                                    <th>Organizer</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Type</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="eventsTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+          
+            <div id="adminUsersView" class="hidden">
+                <h1>Users Management</h1>
+                <div class="dashboard-card">
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Events Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Approval -->
+            <div id="adminPendingView" class="hidden">
+                <h1>Pending Event Approvals</h1>
+                <div class="dashboard-card">
+                    <div id="pendingEventsContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="mainApp" >
+       
+        <header class="header">
+            <nav class="nav container">
+                <a href="#" class="logo">
+                    <i class="fas fa-users"></i>
+                    Connect Kenya
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#events">Events</a></li>
+                    <li><a href="#categories">Categories</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#" onclick="showCreateEventModal()" class="btn-secondary">Create Event</a></li>
+                    <li><a href="#" class="btn-primary" id="userNameDisplay" onclick="currentUser ? logout() : showView('login')">Login</a></li>
+                </ul>
+            </nav>
+        </header>
+
+       
+        <section class="hero">
+            <div class="container">
+                <h1>Connect Kenya</h1>
+                <p>Discover amazing events, activities, and connect with like-minded people across all 47 counties of Kenya. From Nairobi to Turkana, find your community!</p>
+                
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">47</div>
+                        <div class="stat-label">Counties Covered</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="heroEventCount">500+</div>
+                        <div class="stat-label">Active Events</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="heroMemberCount">10K+</div>
+                        <div class="stat-label">Community Members</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+      
+        <div class="main-content">
+          
+            <section class="filter-section">
+                <div class="container">
+                    <h2 class="section-title">Find Your Perfect Activity</h2>
+                    <div class="filter-container">
+                        <div class="filter-group">
+                            <label for="county">County</label>
+                            <select id="county" onchange="updateAreas(); filterEvents()">
+                                <option value="">All Counties</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="area">Area/Constituency</label>
+                            <select id="area" onchange="filterEvents()">
+                                <option value="">All Areas</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="category">Category</label>
+                            <select id="category" onchange="filterEvents()">
+                                <option value="">All Categories</option>
+                                <option value="sports">Sports & Fitness</option>
+                                <option value="social">Social Events</option>
+                                <option value="business">Business & Networking</option>
+                                <option value="education">Education & Learning</option>
+                                <option value="culture">Culture & Arts</option>
+                                <option value="outdoor">Outdoor Activities</option>
+                                <option value="food">Food & Dining</option>
+                                <option value="music">Music & Entertainment</option>
+                                <option value="volunteer">Volunteer Work</option>
+                                <option value="tech">Technology</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="priceRange">Price Range (KSH)</label>
+                            <select id="priceRange" onchange="filterEvents()">
+                                <option value="">Any Price</option>
+                                <option value="free">Free</option>
+                                <option value="0-500">0 - 500</option>
+                                <option value="500-1000">500 - 1,000</option>
+                                <option value="1000-5000">1,000 - 5,000</option>
+                                <option value="5000+">5,000+</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+           
+            <section class="events-section" id="events">
+                <div class="container">
+                    <h2 class="section-title">Upcoming Events & Activities</h2>
+                    <div id="eventsContainer" class="events-grid">
+                       
+                    </div>
+                </div>
+            </section>
+
+           
+            <section class="categories-section" id="categories">
+                <div class="container">
+                    <h2 class="section-title">Popular Categories</h2>
+                    <div class="categories-grid">
+                        <div class="category-card" onclick="filterByCategory('sports')">
+                            <i class="fas fa-running category-icon"></i>
+                            <h3 class="category-name">Sports & Fitness</h3>
+                            <p class="category-count">150+ events</p>
+                        </div>
+                        <div class="category-card" onclick="filterByCategory('social')">
+                            <i class="fas fa-users category-icon"></i>
+                            <h3 class="category-name">Social Events</h3>
+                            <p class="category-count">200+ events</p>
+                        </div>
+                        <div class="category-card" onclick="filterByCategory('business')">
+                            <i class="fas fa-briefcase category-icon"></i>
+                            <h3 class="category-name">Business</h3>
+                            <p class="category-count">80+ events</p>
+                        </div>
+                        <div class="category-card" onclick="filterByCategory('education')">
+                            <i class="fas fa-graduation-cap category-icon"></i>
+                            <h3 class="category-name">Education</h3>
+                            <p class="category-count">120+ events</p>
+                        </div>
+                        <div class="category-card" onclick="filterByCategory('culture')">
+                            <i class="fas fa-palette category-icon"></i>
+                            <h3 class="category-name">Culture & Arts</h3>
+                            <p class="category-count">90+ events</p>
+                        </div>
+                        <div class="category-card" onclick="filterByCategory('outdoor')">
+                            <i class="fas fa-mountain category-icon"></i>
+                            <h3 class="category-name">Outdoor</h3>
+                            <p class="category-count">110+ events</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        
+        <footer class="footer" id="contact">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>Connect Kenya</h3>
+                        <p>Building stronger communities across all 47 counties of Kenya through meaningful connections and shared experiences.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="#events">Browse Events</a></li>
+                            <li><a href="#categories">Categories</a></li>
+                            <li><a href="#create">Create Event</a></li>
+                            <li><a href="#community">Join Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Counties</h3>
+                        <ul>
+                            <li><a href="#">Nairobi</a></li>
+                            <li><a href="#">Mombasa</a></li>
+                            <li><a href="#">Kisumu</a></li>
+                            <li><a href="#">Nakuru</a></li>
+                            <li><a href="#">View All Counties</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Contact Us</h3>
+                        <ul>
+                            <li><i class="fas fa-envelope"></i> info@connectkenya.com</li>
+                            <li><i class="fas fa-phone"></i> +254 700 000 000</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Connect Kenya. All rights reserved. Building communities across Kenya.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+   
+    <div id="createEventModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCreateEventModal()">&times;</span>
+            <h2>Create New Event</h2>
+            <div id="createEventAlert"></div>
+            
+          
+            <div class="payment-info">
+                <h4><i class="fas fa-mobile-alt"></i> Payment Required for Event Creation</h4>
+                <p>To create an event on Connect Kenya, please send payment to our M-Pesa number:</p>
+                <div class="mpesa-number">+254 768 124 427</div>
+                <p><strong>Payment Amount:</strong> KSH 200 (Standard Event) | KSH 500 (VIP Event - Featured)</p>
+                <p><small>After payment, your event will be reviewed and approved within 24 hours. VIP events get priority placement and highlighting.</small></p>
+            </div>
+
+            <form id="createEventForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="eventTitle">Event Title *</label>
+                        <input type="text" id="eventTitle" required maxlength="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="eventCategory">Category *</label>
+                        <select id="eventCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="sports">Sports & Fitness</option>
+                            <option value="social">Social Events</option>
+                            <option value="business">Business & Networking</option>
+                            <option value="education">Education & Learning</option>
+                            <option value="culture">Culture & Arts</option>
+                            <option value="outdoor">Outdoor Activities</option>
+                            <option value="food">Food & Dining</option>
+                            <option value="music">Music & Entertainment</option>
+                            <option value="volunteer">Volunteer Work</option>
+                            <option value="tech">Technology</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="eventDescription">Event Description *</label>
+                    <textarea id="eventDescription" required maxlength="500" placeholder="Describe your event, what to expect, who should attend..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="eventCounty">County *</label>
+                        <select id="eventCounty" required onchange="updateEventAreas()">
+                            <option value="">Select County</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventArea">Area/Constituency *</label>
+                        <select id="eventArea" required>
+                            <option value="">Select Area</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="eventDate">Event Date *</label>
+                        <input type="date" id="eventDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventTime">Event Time</label>
+                        <input type="time" id="eventTime">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="eventPrice">Ticket Price (KSH)</label>
+                        <input type="number" id="eventPrice" min="0" placeholder="0 for free events">
+                    </div>
+                    <div class="form-group">
+                        <label for="maxAttendees">Maximum Attendees</label>
+                        <input type="number" id="maxAttendees" min="1" placeholder="No limit if empty">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="eventLocation">Specific Location/Venue</label>
+                    <input type="text" id="eventLocation" placeholder="e.g., Uhuru Park, ABC Hotel Conference Room">
+                </div>
+
+                <div class="form-group">
+                    <label for="organizerContact">Contact Information</label>
+                    <input type="text" id="organizerContact" placeholder="Phone or email for inquiries">
+                </div>
+
+                <div class="form-group">
+                    <label for="eventType">Event Type *</label>
+                    <select id="eventType" required>
+                        <option value="standard">Standard Event (KSH 200)</option>
+                        <option value="vip">VIP Event (KSH 500) - Featured & Priority</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="mpesaCode">M-Pesa Transaction Code *</label>
+                    <input type="text" id="mpesaCode" required placeholder="e.g., QK12345678" maxlength="20">
+                    <small style="color: #666;">Enter the M-Pesa transaction code after making payment</small>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button type="submit" class="btn-primary" style="padding: 15px 40px; font-size: 1.1rem;">
+                        <i class="fas fa-plus-circle"></i> Submit Event for Approval
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalContent">
+                
+            </div>
+        </div>
+    </div>
+
+   
+    <div id="editEventModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditEventModal()">&times;</span>
+            <h2>Edit Event</h2>
+            <div id="editEventAlert"></div>
+            <form id="editEventForm">
+                <input type="hidden" id="editEventId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editEventTitle">Event Title</label>
+                        <input type="text" id="editEventTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEventCategory">Category</label>
+                        <select id="editEventCategory" required>
+                            <option value="sports">Sports & Fitness</option>
+                            <option value="social">Social Events</option>
+                            <option value="business">Business & Networking</option>
+                            <option value="education">Education & Learning</option>
+                            <option value="culture">Culture & Arts</option>
+                            <option value="outdoor">Outdoor Activities</option>
+                            <option value="food">Food & Dining</option>
+                            <option value="music">Music & Entertainment</option>
+                            <option value="volunteer">Volunteer Work</option>
+                            <option value="tech">Technology</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editEventDescription">Description</label>
+                    <textarea id="editEventDescription" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editEventDate">Date</label>
+                        <input type="date" id="editEventDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEventPrice">Price (KSH)</label>
+                        <input type="number" id="editEventPrice" min="0">
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 1rem;">
+                    <button type="submit" class="btn-primary">Update Event</button>
+                    <button type="button" onclick="closeEditEventModal()" class="btn-secondary">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<script>
+
+let currentUser = null;
+let allEvents = [];
+let filteredEvents = [];
+let allUsers = [];
+
+
+const kenyaData = {
+    "Nairobi": ["Westlands", "Dagoretti North", "Dagoretti South", "Langata", "Kibra", "Roysambu", "Kasarani", "Ruaraka", "Embakasi South", "Embakasi North", "Embakasi Central", "Embakasi East", "Embakasi West", "Makadara", "Kamukunji", "Starehe", "Mathare"],
+    "Mombasa": ["Changamwe", "Jomvu", "Kisauni", "Nyali", "Likoni", "Mvita"],
+    "Kwale": ["Msambweni", "Lunga Lunga", "Matuga", "Kinango"],
+    "Kilifi": ["Kilifi North", "Kilifi South", "Kaloleni", "Rabai", "Ganze", "Malindi", "Magarini"],
+    "Tana River": ["Garsen", "Galole", "Bura"],
+    "Lamu": ["Lamu East", "Lamu West"],
+    "Taita Taveta": ["Taveta", "Wundanyi", "Mwatate", "Voi"],
+    "Garissa": ["Garissa Township", "Balambala", "Lagdera", "Dadaab", "Fafi", "Ijara"],
+    "Wajir": ["Wajir North", "Wajir East", "Tarbaj", "Wajir West", "Eldas", "Wajir South"],
+    "Mandera": ["Mandera West", "Banissa", "Mandera North", "Mandera South", "Mandera East", "Lafey"],
+    "Marsabit": ["Moyale", "North Horr", "Saku", "Laisamis"],
+    "Isiolo": ["Isiolo North", "Isiolo South"],
+    "Meru": ["Igembe South", "Igembe Central", "Igembe North", "Tigania West", "Tigania East", "North Imenti", "Buuri", "Central Imenti", "South Imenti"],
+    "Tharaka Nithi": ["Maara", "Chuka/Igambang'ombe", "Tharaka"],
+    "Embu": ["Manyatta", "Runyenjes", "Mbeere South", "Mbeere North"],
+    "Kitui": ["Mwingi North", "Mwingi West", "Mwingi Central", "Kitui West", "Kitui Rural", "Kitui Central", "Kitui East", "Kitui South"],
+    "Machakos": ["Masinga", "Yatta", "Kangundo", "Matungulu", "Kathiani", "Mavoko", "Machakos Town", "Mwala"],
+    "Makueni": ["Mbooni", "Kilome", "Kaiti", "Makueni", "Kibwezi West", "Kibwezi East"],
+    "Nyandarua": ["Kinangop", "Kipipiri", "Ol Kalou", "Ol Joro Orok", "Ndaragwa"],
+    "Nyeri": ["Tetu", "Kieni", "Mathira", "Othaya", "Mukurweini", "Nyeri Town"],
+    "Kirinyaga": ["Mwea", "Gichugu", "Ndia", "Kirinyaga Central"],
+    "Murang'a": ["Kangema", "Mathioya", "Kiharu", "Kigumo", "Maragwa", "Kandara", "Gatanga"],
+    "Kiambu": ["Gatundu South", "Gatundu North", "Juja", "Thika Town", "Ruiru", "Githunguri", "Kiambu", "Kiambaa", "Kabete", "Kikuyu", "Limuru", "Lari"],
+    "Turkana": ["Turkana North", "Turkana West", "Turkana Central", "Loima", "Turkana South", "Turkana East"],
+    "West Pokot": ["Kapenguria", "Sigor", "Kacheliba", "Pokot South"],
+    "Samburu": ["Samburu West", "Samburu North", "Samburu East"],
+    "Trans Nzoia": ["Kwanza", "Endebess", "Saboti", "Kiminini", "Cherangany"],
+    "Uasin Gishu": ["Soy", "Turbo", "Moiben", "Ainabkoi", "Kapseret", "Kesses"],
+    "Elgeyo Marakwet": ["Marakwet East", "Marakwet West", "Keiyo North", "Keiyo South"],
+    "Nandi": ["Tinderet", "Aldai", "Nandi Hills", "Chesumei", "Emgwen", "Mosop"],
+    "Baringo": ["Tiaty", "Baringo North", "Baringo Central", "Baringo South", "Mogotio", "Eldama Ravine"],
+    "Laikipia": ["Laikipia West", "Laikipia East", "Laikipia North"],
+    "Nakuru": ["Nakuru Town West", "Nakuru Town East", "Naivasha", "Gilgil", "Kuresoi South", "Kuresoi North", "Molo", "Rongai", "Subukia", "Bahati", "Njoro"],
+    "Narok": ["Narok North", "Narok South", "Narok East", "Narok West", "Emurua Dikirr", "Kilgoris"],
+    "Kajiado": ["Kajiado North", "Kajiado Central", "Kajiado East", "Kajiado West", "Kajiado South"],
+    "Kericho": ["Ainamoi", "Belgut", "Kipkelion East", "Kipkelion West", "Bureti", "Sigowet/Soin"],
+    "Bomet": ["Bomet Central", "Bomet East", "Chepalungu", "Sotik", "Konoin"],
+    "Kakamega": ["Lugari", "Likuyani", "Malava", "Lurambi", "Navakholo", "Mumias West", "Mumias East", "Matungu", "Butere", "Khwisero", "Shinyalu", "Ikolomani"],
+    "Vihiga": ["Vihiga", "Sabatia", "Hamisi", "Luanda", "Emuhaya"],
+    "Bungoma": ["Mt. Elgon", "Sirisia", "Kabuchai", "Bumula", "Kanduyi", "Webuye East", "Webuye West", "Kimilili", "Tongaren"],
+    "Busia": ["Teso North", "Teso South", "Nambale", "Matayos", "Butula", "Funyula", "Budalangi"],
+    "Siaya": ["Ugunja", "Ugenya", "Gem", "Bondo", "Rarieda", "Alego Usonga"],
+    "Kisumu": ["Kisumu East", "Kisumu West", "Kisumu Central", "Seme", "Nyando", "Muhoroni", "Nyakach"],
+    "Homa Bay": ["Kabondo Kasipul", "Karachuonyo", "Rangwe", "Homa Bay Town", "Ndhiwa", "Mbita", "Suba North", "Suba South"],
+    "Migori": ["Rongo", "Awendo", "Suna East", "Suna West", "Uriri", "Nyatike", "Kuria West", "Kuria East"],
+    "Kisii": ["Bobasi", "South Mugirango", "Bomachoge Borabu", "Bomachoge Chache", "Nyaribari Masaba", "Nyaribari Chache", "Kitutu Chache North", "Kitutu Chache South", "Bonchari"],
+    "Nyamira": ["Kitutu Masaba", "West Mugirango", "North Mugirango", "Borabu"]
+};
+
+
+document.addEventListener('DOMContentLoaded', async function() {
+
+    const today = new Date().toISOString().split('T')[0];
+    const eventDateInput = document.getElementById('eventDate');
+    if (eventDateInput) eventDateInput.min = today;
+
+
+    populateCounties();
+
+    
+    const storedUser = localStorage.getItem('connectKenya_currentUser');
+    if (storedUser) {
+        currentUser = JSON.parse(storedUser);
+    }
+
+    
+    await loadEvents();
+
+
+    if (currentUser) {
+        if (currentUser.role === 'admin') {
+            showView('admin');
+        } else {
+            showView('main');
+        }
+    } else {
+        showView('main');
+    }
+});
+
+
+async function loadEvents(filters = {}) {
+    try {
+        let url = '/api/events?status=approved';
+        if (filters.category) url += `&category=${encodeURIComponent(filters.category)}`;
+        if (filters.county) url += `&county=${encodeURIComponent(filters.county)}`;
+        if (filters.area) url += `&area=${encodeURIComponent(filters.area)}`;
+        if (filters.priceRange) url += `&priceRange=${encodeURIComponent(filters.priceRange)}`;
+        
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to fetch events');
+        allEvents = await response.json();
+        filteredEvents = [...allEvents];
+        displayEvents(filteredEvents);
+        updateHeroStats();
+    } catch (err) {
+        console.error('Error loading events:', err);
+        showAlert('eventsContainer', 'Failed to load events. Please try again.', 'error');
+    }
+}
+
+
+function showLogin() {
+    document.getElementById('loginScreen').classList.remove('hidden');
+    document.getElementById('registerScreen').classList.add('hidden');
+    document.getElementById('mainApp').classList.add('hidden');
+    document.getElementById('adminDashboard').classList.add('hidden');
+    clearAlert('authAlert');
+}
+
+function showRegister() {
+    document.getElementById('registerScreen').classList.remove('hidden');
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('mainApp').classList.add('hidden');
+    document.getElementById('adminDashboard').classList.add('hidden');
+    clearAlert('registerAlert');
+}
+
+function showView(view) {
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('registerScreen').classList.add('hidden');
+    document.getElementById('adminDashboard').classList.add('hidden');
+    document.getElementById('mainApp').classList.add('hidden');
+
+    switch (view) {
+        case 'login':
+            document.getElementById('loginScreen').classList.remove('hidden');
+            break;
+        case 'register':
+            document.getElementById('registerScreen').classList.remove('hidden');
+            break;
+        case 'admin':
+            document.getElementById('adminDashboard').classList.remove('hidden');
+            updateAdminDashboard();
+            break;
+        case 'main':
+            document.getElementById('mainApp').classList.remove('hidden');
+            updateMainApp();
+            break;
+    }
+}
+
+
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+
+    try {
+        const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+        const data = await response.json();
+        if (data.success) {
+            currentUser = data.user;
+            localStorage.setItem('connectKenya_currentUser', JSON.stringify(currentUser));
+            if (currentUser.role === 'admin') {
+                showView('admin');
+            } else {
+                showView('main');
+            }
+            showNotification(`Welcome back, ${currentUser.name}!`, 'success');
+        } else {
+            showAlert('authAlert', data.message || 'Invalid email or password', 'error');
+        }
+    } catch (err) {
+        showAlert('authAlert', 'Server error. Please try again.', 'error');
+    }
+});
+
+
+document.getElementById('registerForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const name = document.getElementById('registerName').value;
+    const email = document.getElementById('registerEmail').value;
+    const phone = document.getElementById('registerPhone').value;
+    const password = document.getElementById('registerPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    if (password !== confirmPassword) {
+        showAlert('registerAlert', 'Passwords do not match', 'error');
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, phone, password })
+        });
+        const data = await response.json();
+        if (data.success) {
+            currentUser = data.user;
+            localStorage.setItem('connectKenya_currentUser', JSON.stringify(currentUser));
+            showAlert('registerAlert', 'Registration successful! Welcome to Connect Kenya!', 'success');
+            setTimeout(() => showView('main'), 1500);
+        } else {
+            showAlert('registerAlert', data.message, 'error');
+        }
+    } catch (err) {
+        showAlert('registerAlert', 'Server error. Please try again.', 'error');
+    }
+});
+
+function logout() {
+    currentUser = null;
+    localStorage.removeItem('connectKenya_currentUser');
+    showView('main');
+    showNotification('Logged out successfully', 'success');
+}
+
+
+function showAlert(containerId, message, type = 'info') {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const alertClass = type === 'error' ? 'alert-error' : 
+                      type === 'success' ? 'alert-success' : 
+                      type === 'warning' ? 'alert-warning' : 'alert-info';
+    container.innerHTML = `<div class="alert ${alertClass}">${message}</div>`;
+    if (type === 'success') {
+        setTimeout(() => clearAlert(containerId), 5000);
+    }
+}
+
+function clearAlert(containerId) {
+    const container = document.getElementById(containerId);
+    if (container) container.innerHTML = '';
+}
+
+
+function updateMainApp() {
+    if (currentUser) {
+        document.getElementById('userNameDisplay').textContent = currentUser.name;
+    } else {
+        document.getElementById('userNameDisplay').textContent = 'Login';
+        document.getElementById('userNameDisplay').onclick = () => showView('login');
+    }
+    populateCounties();
+    displayEvents(filteredEvents);
+    updateHeroStats();
+}
+
+function updateHeroStats() {
+    document.getElementById('heroEventCount').textContent = allEvents.length + '+';
+    document.getElementById('heroMemberCount').textContent = (allUsers.length || 10) + 'K+';
+}
+
+
+function populateCounties() {
+    const countySelects = ['county', 'eventCounty'];
+    countySelects.forEach(selectId => {
+        const select = document.getElementById(selectId);
+        if (!select) return;
+        const firstOption = select.querySelector('option');
+        select.innerHTML = '';
+        if (firstOption) select.appendChild(firstOption);
+        Object.keys(kenyaData).sort().forEach(county => {
+            const option = document.createElement('option');
+            option.value = county;
+            option.textContent = county;
+            select.appendChild(option);
+        });
+    });
+}
+
+function updateAreas() {
+    const countySelect = document.getElementById('county');
+    const areaSelect = document.getElementById('area');
+    if (!countySelect || !areaSelect) return;
+    const selectedCounty = countySelect.value;
+    areaSelect.innerHTML = '<option value="">All Areas</option>';
+    if (selectedCounty && kenyaData[selectedCounty]) {
+        kenyaData[selectedCounty].forEach(area => {
+            const option = document.createElement('option');
+            option.value = area;
+            option.textContent = area;
+            areaSelect.appendChild(option);
+        });
+    }
+}
+
+function updateEventAreas() {
+    const countySelect = document.getElementById('eventCounty');
+    const areaSelect = document.getElementById('eventArea');
+    if (!countySelect || !areaSelect) return;
+    const selectedCounty = countySelect.value;
+    areaSelect.innerHTML = '<option value="">Select Area</option>';
+    if (selectedCounty && kenyaData[selectedCounty]) {
+        kenyaData[selectedCounty].forEach(area => {
+            const option = document.createElement('option');
+            option.value = area;
+            option.textContent = area;
+            areaSelect.appendChild(option);
+        });
+    }
+}
+
+
+async function filterEvents() {
+    const filters = {
+        county: document.getElementById('county')?.value || '',
+        area: document.getElementById('area')?.value || '',
+        category: document.getElementById('category')?.value || '',
+        priceRange: document.getElementById('priceRange')?.value || ''
+    };
+    await loadEvents(filters);
+}
+
+function filterByCategory(categoryName) {
+    const categorySelect = document.getElementById('category');
+    if (categorySelect) {
+        categorySelect.value = categoryName;
+        filterEvents();
+        document.getElementById('events')?.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+function displayEvents(events) {
+    const container = document.getElementById('eventsContainer');
+    if (!container) return;
+    if (events.length === 0) {
+        container.innerHTML = `
+            <div class="no-results">
+                <i class="fas fa-search" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+                <h3>No events found</h3>
+                <p>Try adjusting your filters to find more events.</p>
+            </div>`;
+        return;
+    }
+    events.sort((a, b) => {
+        if (a.is_vip && !b.is_vip) return -1;
+        if (!a.is_vip && b.is_vip) return 1;
+        return new Date(a.date) - new Date(b.date);
+    });
+    container.innerHTML = events.map(event => `
+        <div class="event-card ${event.is_vip ? 'vip' : ''}" onclick="showEventDetails(${event.id})">
+            ${event.is_vip ? '<div class="vip-badge">VIP</div>' : ''}
+            <div class="event-image">
+                <i class="fas ${getEventIcon(event.category)}"></i>
+                <div class="event-category">${getCategoryName(event.category)}</div>
+            </div>
+            <div class="event-content">
+                <h3 class="event-title">${event.title}</h3>
+                <div class="event-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    ${event.area}, ${event.county}
+                </div>
+                <p class="event-description">${event.description}</p>
+                <div class="event-meta">
+                    <div class="event-date">
+                        <i class="fas fa-calendar"></i>
+                        ${formatDate(event.date)}
+                    </div>
+                    <div class="event-price">
+                        ${event.price === 0 ? 'FREE' : `KSH ${event.price.toLocaleString()}`}
+                    </div>
+                </div>
+                <div class="event-footer">
+                    <div class="event-organizer">
+                        <div class="organizer-avatar">
+                            ${event.organizer.charAt(0)}
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 0.9rem;">${event.organizer}</div>
+                            <div style="font-size: 0.8rem; color: #666;">${event.attendees} going</div>
+                        </div>
+                    </div>
+                    <button class="btn-join" onclick="joinEvent(${event.id}, event)">
+                        Join Event
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+
+function showCreateEventModal() {
+    if (!currentUser) {
+        showView('login');
+        showNotification('Please log in to create an event.', 'warning');
+        return;
+    }
+    document.getElementById('createEventModal').style.display = 'block';
+    updateEventAreas();
+}
+
+function closeCreateEventModal() {
+    document.getElementById('createEventModal').style.display = 'none';
+    document.getElementById('createEventForm').reset();
+    clearAlert('createEventAlert');
+}
+
+document.getElementById('createEventForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const eventData = {
+        title: document.getElementById('eventTitle').value,
+        category: document.getElementById('eventCategory').value,
+        description: document.getElementById('eventDescription').value,
+        county: document.getElementById('eventCounty').value,
+        area: document.getElementById('eventArea').value,
+        date: document.getElementById('eventDate').value,
+        time: document.getElementById('eventTime').value || null,
+        price: parseInt(document.getElementById('eventPrice').value) || 0,
+        max_attendees: parseInt(document.getElementById('maxAttendees').value) || null,
+        location: document.getElementById('eventLocation').value,
+        contact: document.getElementById('organizerContact').value,
+        is_vip: document.getElementById('eventType').value === 'vip',
+        mpesa_code: document.getElementById('mpesaCode').value,
+        organizer: currentUser.name,
+        organizer_id: currentUser.id,
+        icon: getEventIcon(document.getElementById('eventCategory').value)
+    };
+
+    if (!eventData.title || !eventData.category || !eventData.description || !eventData.county || !eventData.area || !eventData.date || !eventData.mpesa_code) {
+        showAlert('createEventAlert', 'Please fill in all required fields', 'error');
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/events', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(eventData)
+        });
+        const data = await response.json();
+        if (data.success) {
+            allEvents.push(data.event);
+            showAlert('createEventAlert', 'Event submitted successfully! It will be reviewed within 24 hours.', 'success');
+            setTimeout(() => {
+                closeCreateEventModal();
+                if (currentUser.role === 'admin') {
+                    updateAdminDashboard();
+                } else {
+                    loadEvents();
+                }
+            }, 2000);
+        } else {
+            showAlert('createEventAlert', data.message || 'Failed to create event', 'error');
+        }
+    } catch (err) {
+        showAlert('createEventAlert', 'Server error. Please try again.', 'error');
+    }
+});
+
+// Helper Functions
+function getEventIcon(category) {
+    const icons = {
+        'sports': 'fa-running',
+        'social': 'fa-users',
+        'business': 'fa-briefcase',
+        'education': 'fa-graduation-cap',
+        'culture': 'fa-palette',
+        'outdoor': 'fa-mountain',
+        'food': 'fa-utensils',
+        'music': 'fa-music',
+        'volunteer': 'fa-heart',
+        'tech': 'fa-laptop-code'
+    };
+    return icons[category] || 'fa-calendar';
+}
+
+function getCategoryName(category) {
+    const categories = {
+        'sports': 'Sports & Fitness',
+        'social': 'Social Events',
+        'business': 'Business',
+        'education': 'Education',
+        'culture': 'Culture & Arts',
+        'outdoor': 'Outdoor',
+        'food': 'Food & Dining',
+        'music': 'Music',
+        'volunteer': 'Volunteer',
+        'tech': 'Technology'
+    };
+    return categories[category] || category;
+}
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function showEventDetails(eventId) {
+    const event = allEvents.find(e => e.id === eventId);
+    if (!event) return;
+    const modalContent = document.getElementById('modalContent');
+    modalContent.innerHTML = `
+        <h2>${event.title} ${event.is_vip ? '<span style="color: #e74c3c; font-size: 0.8em;">VIP</span>' : ''}</h2>
+        <div style="display: flex; align-items: center; gap: 10px; margin: 1rem 0; color: #666;">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>${event.location || event.area + ', ' + event.county}</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; margin: 1rem 0; color: #666;">
+            <i class="fas fa-calendar"></i>
+            <span>${formatDate(event.date)} ${event.time ? 'at ' + event.time : ''}</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; margin: 1rem 0; color: #e74c3c; font-weight: 700; font-size: 1.2rem;">
+            <i class="fas fa-tag"></i>
+            <span>${event.price === 0 ? 'FREE' : `KSH ${event.price.toLocaleString()}`}</span>
+        </div>
+        <p style="margin: 1.5rem 0; line-height: 1.6;">${event.description}</p>
+        <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+            <h4>Event Details:</h4>
+            <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                <li>Category: ${getCategoryName(event.category)}</li>
+                <li>Organizer: ${event.organizer}</li>
+                <li>Current Attendees: ${event.attendees}</li>
+                ${event.max_attendees ? `<li>Maximum Capacity: ${event.max_attendees}</li>` : ''}
+                <li>Location: ${event.location}</li>
+                ${event.contact ? `<li>Contact: ${event.contact}</li>` : ''}
+            </ul>
+        </div>
+        <div style="text-align: center; margin-top: 2rem;">
+            <button class="btn-primary" onclick="joinEvent(${event.id})" style="padding: 15px 30px; font-size: 1.1rem;">
+                <i class="fas fa-user-plus"></i> Join This Event
+            </button>
+            <button onclick="shareEvent(${event.id})" style="background: #28a745; color: white; padding: 15px 30px; border: none; border-radius: 25px; margin-left: 10px; cursor: pointer;">
+                <i class="fas fa-share"></i> Share Event
+            </button>
+        </div>
+    `;
+    document.getElementById('eventModal').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('eventModal').style.display = 'none';
+}
+
+async function joinEvent(eventId, clickEvent) {
+    if (clickEvent) clickEvent.stopPropagation();
+    const event = allEvents.find(e => e.id === eventId);
+    if (!event) return;
+
+    try {
+        const response = await fetch(`/api/events/${eventId}/join`, { method: 'POST' });
+        const data = await response.json();
+        if (data.success) {
+            event.attendees++;
+            displayEvents(filteredEvents);
+            showNotification(`You've joined "${event.title}"!`, 'success');
+            closeModal();
+        } else {
+            showNotification(data.message || 'Failed to join event', 'error');
+        }
+    } catch (err) {
+        showNotification('Server error. Please try again.', 'error');
+    }
+}
+
+function shareEvent(eventId) {
+    const event = allEvents.find(e => e.id === eventId);
+    if (!event) return;
+    const shareText = `Check out this amazing event: "${event.title}" in ${event.area}, ${event.county} on ${formatDate(event.date)}. ${event.price === 0 ? "It's FREE!" : `Only KSH ${event.price.toLocaleString()}`} Join the community at Connect Kenya!`;
+    if (navigator.share) {
+        navigator.share({
+            title: event.title,
+            text: shareText,
+            url: window.location.href
+        });
+    } else {
+        navigator.clipboard.writeText(shareText).then(() => {
+            showNotification('Event details copied to clipboard!', 'success');
+        });
+    }
+}
+
+// Admin Dashboard Functions
+async function updateAdminDashboard() {
+    try {
+        const eventsResponse = await fetch('/api/admin/events');
+        allEvents = await eventsResponse.json();
+        const usersResponse = await fetch('/api/admin/users');
+        allUsers = await usersResponse.json();
+        updateAdminStats();
+        updatePendingCount();
+        updateRecentActivities();
+        updateEventsTable();
+        updateUsersTable();
+        updatePendingEvents();
+        showAdminSection('dashboard');
+    } catch (err) {
+        showAlert('adminAlert', 'Failed to load admin data', 'error');
+    }
+}
+
+function updateAdminStats() {
+    const totalEvents = allEvents.length;
+    const approvedEvents = allEvents.filter(e => e.status === 'approved').length;
+    const pendingEvents = allEvents.filter(e => e.status === 'pending').length;
+    const vipEvents = allEvents.filter(e => e.is_vip).length;
+    document.getElementById('totalEvents').textContent = totalEvents;
+    document.getElementById('approvedEvents').textContent = approvedEvents;
+    document.getElementById('pendingEvents').textContent = pendingEvents;
+    document.getElementById('vipEvents').textContent = vipEvents;
+}
+
+function updatePendingCount() {
+    const pendingCount = allEvents.filter(e => e.status === 'pending').length;
+    const badge = document.getElementById('pendingCount');
+    if (badge) {
+        badge.textContent = pendingCount;
+        badge.style.display = pendingCount > 0 ? 'inline-block' : 'none';
+    }
+}
+
+function updateRecentActivities() {
+    const recentEvents = allEvents
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+        .slice(0, 5);
+    const container = document.getElementById('recentActivities');
+    if (!container) return;
+    container.innerHTML = recentEvents.map(event => `
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid #eee;">
+            <div>
+                <strong>${event.title}</strong><br>
+                <small>by ${event.organizer} - ${event.status}</small>
+            </div>
+            <div style="text-align: right; font-size: 0.8rem; color: #666;">
+                ${formatDate(event.created_at)}
+            </div>
+        </div>
+    `).join('') || '<p>No recent activities</p>';
+}
+
+function showAdminSection(section) {
+    document.getElementById('adminDashboardView').classList.add('hidden');
+    document.getElementById('adminEventsView').classList.add('hidden');
+    document.getElementById('adminUsersView').classList.add('hidden');
+    document.getElementById('adminPendingView').classList.add('hidden');
+    document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+
+    const sectionMap = {
+        'dashboard': 'adminDashboardView',
+        'events': 'adminEventsView',
+        'users': 'adminUsersView',
+        'pending': 'adminPendingView'
+    };
+    if (sectionMap[section]) {
+        document.getElementById(sectionMap[section]).classList.remove('hidden');
+        document.querySelector(`.sidebar-nav a[onclick="showAdminSection('${section}')"]`)?.classList.add('active');
+    }
+}
+
+function updateEventsTable() {
+    const tbody = document.getElementById('eventsTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = allEvents.map(event => `
+        <tr>
+            <td>${event.title}</td>
+            <td>${event.organizer}</td>
+            <td>${formatDate(event.date)}</td>
+            <td><span class="status-${event.status}">${event.status.toUpperCase()}</span></td>
+            <td>${event.is_vip ? 'VIP' : 'Standard'}</td>
+            <td>
+                <button class="action-btn btn-edit" onclick="editEvent(${event.id})">Edit</button>
+                ${event.status === 'pending' ? `
+                    <button class="action-btn btn-approve" onclick="approveEvent(${event.id})">Approve</button>
+                    <button class="action-btn btn-reject" onclick="rejectEvent(${event.id})">Reject</button>
+                ` : ''}
+                ${event.status === 'approved' && !event.is_vip ? `
+                    <button class="action-btn btn-vip" onclick="makeVip(${event.id})">Make VIP</button>
+                ` : ''}
+                <button class="action-btn btn-delete" onclick="deleteEvent(${event.id})">Delete</button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function updateUsersTable() {
+    const tbody = document.getElementById('usersTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = allUsers.map(user => {
+        const userEvents = allEvents.filter(e => e.organizer_id === user.id).length;
+        return `
+            <tr>
+                <td>${user.name}</td>
+                <td>${user.email}</td>
+                <td>${user.phone}</td>
+                <td>${userEvents}</td>
+                <td>
+                    <button class="action-btn btn-delete" onclick="deleteUser(${user.id})">Delete</button>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+function updatePendingEvents() {
+    const container = document.getElementById('pendingEventsContainer');
+    if (!container) return;
+    const pendingEvents = allEvents.filter(e => e.status === 'pending');
+    if (pendingEvents.length === 0) {
+        container.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">No pending events</p>';
+        return;
+    }
+    container.innerHTML = pendingEvents.map(event => `
+        <div class="event-card pending" style="margin-bottom: 2rem;">
+            <div class="event-image">
+                <i class="fas ${getEventIcon(event.category)}"></i>
+                <div class="event-status status-pending">PENDING</div>
+            </div>
+            <div class="event-content">
+                <h3>${event.title}</h3>
+                <p><strong>Organizer:</strong> ${event.organizer}</p>
+                <p><strong>Category:</strong> ${getCategoryName(event.category)}</p>
+                <p><strong>Location:</strong> ${event.area}, ${event.county}</p>
+                <p><strong>Date:</strong> ${formatDate(event.date)}</p>
+                <p><strong>Price:</strong> ${event.price === 0 ? 'FREE' : `KSH ${event.price.toLocaleString()}`}</p>
+                <p><strong>Type:</strong> ${event.is_vip ? 'VIP Event' : 'Standard Event'}</p>
+                <p><strong>M-Pesa Code:</strong> ${event.mpesa_code}</p>
+                <p><strong>Description:</strong> ${event.description}</p>
+                <div style="margin-top: 1rem;">
+                    <button class="btn-primary" onclick="approveEvent(${event.id})" style="margin-right: 1rem;">
+                        <i class="fas fa-check"></i> Approve
+                    </button>
+                    <button class="btn-secondary" onclick="rejectEvent(${event.id})" style="background: #dc3545;">
+                        <i class="fas fa-times"></i> Reject
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Admin Actions
+async function approveEvent(eventId) {
+    try {
+        const response = await fetch(`/api/admin/events/${eventId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: 'approved' })
+        });
+        const data = await response.json();
+        if (data.success) {
+            await updateAdminDashboard();
+            showAlert('adminAlert', `Event "${data.event.title}" approved successfully!`, 'success');
+        }
+    } catch (err) {
+        showAlert('adminAlert', 'Server error', 'error');
+    }
+}
+
+async function rejectEvent(eventId) {
+    const event = allEvents.find(e => e.id === eventId);
+    if (event && confirm(`Are you sure you want to reject "${event.title}"?`)) {
+        try {
+            const response = await fetch(`/api/admin/events/${eventId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: 'rejected' })
+            });
+            const data = await response.json();
+            if (data.success) {
+                await updateAdminDashboard();
+                showAlert('adminAlert', `Event "${event.title}" rejected.`, 'warning');
+            }
+        } catch (err) {
+            showAlert('adminAlert', 'Server error', 'error');
+        }
+    }
+}
+
+async function makeVip(eventId) {
+    try {
+        const response = await fetch(`/api/admin/events/${eventId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ is_vip: true })
+        });
+        const data = await response.json();
+        if (data.success) {
+            await updateAdminDashboard();
+            showAlert('adminAlert', `Event "${data.event.title}" is now VIP!`, 'success');
+        }
+    } catch (err) {
+        showAlert('adminAlert', 'Server error', 'error');
+    }
+}
+
+async function deleteEvent(eventId) {
+    const event = allEvents.find(e => e.id === eventId);
+    if (event && confirm(`Are you sure you want to delete "${event.title}"? This action cannot be undone.`)) {
+        try {
+            const response = await fetch(`/api/admin/events/${eventId}`, { method: 'DELETE' });
+            const data = await response.json();
+            if (data.success) {
+                await updateAdminDashboard();
+                showAlert('adminAlert', 'Event deleted successfully.', 'success');
+            }
+        } catch (err) {
+            showAlert('adminAlert', 'Server error', 'error');
+        }
+    }
+}
+
+async function deleteUser(userId) {
+    const user = allUsers.find(u => u.id === userId);
+    if (user && confirm(`Are you sure you want to delete user "${user.name}"? This will also delete all their events.`)) {
+        try {
+            const response = await fetch(`/api/admin/users/${userId}`, { method: 'DELETE' });
+            const data = await response.json();
+            if (data.success) {
+                await updateAdminDashboard();
+                showAlert('adminAlert', 'User deleted successfully.', 'success');
+            }
+        } catch (err) {
+            showAlert('adminAlert', 'Server error', 'error');
+        }
+    }
+}
+
+function editEvent(eventId) {
+    const event = allEvents.find(e => e.id === eventId);
+    if (!event) return;
+    document.getElementById('editEventId').value = event.id;
+    document.getElementById('editEventTitle').value = event.title;
+    document.getElementById('editEventCategory').value = event.category;
+    document.getElementById('editEventDescription').value = event.description;
+    document.getElementById('editEventDate').value = event.date;
+    document.getElementById('editEventPrice').value = event.price;
+    document.getElementById('editEventModal').style.display = 'block';
+}
+
+function closeEditEventModal() {
+    document.getElementById('editEventModal').style.display = 'none';
+    clearAlert('editEventAlert');
+}
+
+document.getElementById('editEventForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const eventId = parseInt(document.getElementById('editEventId').value);
+    const updates = {
+        title: document.getElementById('editEventTitle').value,
+        category: document.getElementById('editEventCategory').value,
+        description: document.getElementById('editEventDescription').value,
+        date: document.getElementById('editEventDate').value,
+        price: parseInt(document.getElementById('editEventPrice').value) || 0,
+        icon: getEventIcon(document.getElementById('editEventCategory').value)
+    };
+
+    try {
+        const response = await fetch(`/api/admin/events/${eventId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updates)
+        });
+        const data = await response.json();
+        if (data.success) {
+            closeEditEventModal();
+            await updateAdminDashboard();
+            showAlert('adminAlert', `Event "${updates.title}" updated successfully!`, 'success');
+        }
+    } catch (err) {
+        showAlert('editEventAlert', 'Server error', 'error');
+    }
+});
+
+// Modal Window Management
+window.onclick = function(event) {
+    const modals = ['eventModal', 'createEventModal', 'editEventModal'];
+    modals.forEach(modalId => {
+        const modal = document.getElementById(modalId);
+        if (event.target === modal) modal.style.display = 'none';
+    });
+};
+
+// Notification System
+function showNotification(message, type = 'info', duration = 5000) {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#007bff'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        z-index: 10000;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        max-width: 300px;
+    `;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (notification.parentNode) notification.parentNode.removeChild(notification);
+        }, 300);
+    }, duration);
+}
+
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+
+
+window.addEventListener('scroll', () => {
+    const header = document.querySelector('.header');
+    if (header) {
+        if (window.scrollY > 100) {
+            header.style.background = 'rgba(255, 255, 255, 0.98)';
+            header.style.boxShadow = '0 2px 30px rgba(0,0,0,0.15)';
+        } else {
+            header.style.background = 'rgba(255, 255, 255, 0.95)';
+            header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+        }
+    }
+});
+
+
+if (window.innerWidth <= 768) {
+    const adminContent = document.querySelector('.admin-content');
+    if (adminContent) {
+        const menuButton = document.createElement('button');
+        menuButton.innerHTML = '<i class="fas fa-bars"></i>';
+        menuButton.style.cssText = `
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 2000;
+            background: #1a252f;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        `;
+        menuButton.onclick = () => document.querySelector('.admin-sidebar').classList.toggle('open');
+        document.body.appendChild(menuButton);
+    }
+}
+
+
+if (currentUser && !localStorage.getItem(`welcomed_${currentUser.id}`)) {
+    setTimeout(() => {
+        showNotification(`Welcome to Connect Kenya, ${currentUser.name}! 🎉`, 'success', 7000);
+        localStorage.setItem(`welcomed_${currentUser.id}`, 'true');
+    }, 2000);
+}
+
+console.log('Connect Kenya Platform Initialized!');
+</script>
+<script src="enhanced-features.js"></script>
+<script src="enhanced-join.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+{"level":"info","message":"Connected to PostgreSQL database","timestamp":"2025-09-19T08:45:31.507Z"}
+{"level":"info","message":"Sample events created.","timestamp":"2025-09-19T08:45:31.747Z"}
+{"level":"info","message":"Database initialized successfully.","timestamp":"2025-09-19T08:45:31.753Z"}
+{"level":"info","message":"Connect Kenya server running on http://localhost:3000","timestamp":"2025-09-19T08:45:31.760Z"}
+{"level":"info","message":"Admin credentials: luttareagan22@gmail.com / Guletbaa2@","timestamp":"2025-09-19T08:45:31.761Z"}
+{"level":"info","message":"Connected to PostgreSQL database","timestamp":"2025-09-19T09:06:17.116Z"}
+{"level":"info","message":"Sample events created.","timestamp":"2025-09-19T09:06:17.295Z"}
+{"level":"info","message":"Database initialized successfully.","timestamp":"2025-09-19T09:06:17.313Z"}
+{"level":"info","message":"Connect Kenya server running on http://localhost:3000","timestamp":"2025-09-19T09:06:17.316Z"}
+{"level":"info","message":"Admin credentials: luttareagan22@gmail.com / Guletbaa2@","timestamp":"2025-09-19T09:06:17.316Z"}
+{"level":"info","message":"Connected to PostgreSQL database","timestamp":"2025-09-19T09:11:17.982Z"}
+{"level":"info","message":"Admin user created: luttareagan22@gmail.com","timestamp":"2025-09-19T09:11:18.123Z"}
+{"level":"info","message":"Sample users created.","timestamp":"2025-09-19T09:11:18.309Z"}
+{"level":"info","message":"Counties and areas populated.","timestamp":"2025-09-19T09:11:18.381Z"}
+{"level":"info","message":"Sample events created.","timestamp":"2025-09-19T09:11:18.385Z"}
+{"level":"info","message":"Database initialized successfully.","timestamp":"2025-09-19T09:11:18.387Z"}
+{"level":"info","message":"Connect Kenya server running on http://localhost:3000","timestamp":"2025-09-19T09:11:18.390Z"}
+{"level":"info","message":"Admin credentials: luttareagan22@gmail.com / Guletbaa2@","timestamp":"2025-09-19T09:11:18.390Z"}
+{"level":"info","message":"Connected to PostgreSQL database","timestamp":"2025-09-19T09:35:28.209Z"}
+{"level":"info","message":"Sample events created.","timestamp":"2025-09-19T09:35:28.382Z"}
+{"level":"info","message":"Database initialized successfully.","timestamp":"2025-09-19T09:35:28.406Z"}
+{"level":"info","message":"Connect Kenya server running on http://localhost:3000","timestamp":"2025-09-19T09:35:28.409Z"}
+{"level":"info","message":"Admin credentials: luttareagan22@gmail.com / Guletbaa2@","timestamp":"2025-09-19T09:35:28.409Z"}
+{"level":"info","message":"Connected to PostgreSQL database","timestamp":"2025-09-19T09:35:46.820Z"}
+{"level":"info","message":"Connected to PostgreSQL database","timestamp":"2025-09-19T09:35:46.825Z"}
+{"level":"info","message":"Connected to PostgreSQL database","timestamp":"2025-09-19T09:47:44.427Z"}
+{"level":"info","message":"Sample events created.","timestamp":"2025-09-19T09:47:44.609Z"}
+{"level":"info","message":"Database initialized successfully.","timestamp":"2025-09-19T09:47:44.621Z"}
+{"level":"info","message":"Connect Kenya server running on http://localhost:3000","timestamp":"2025-09-19T09:47:44.623Z"}
+{"level":"info","message":"Admin credentials: luttareagan22@gmail.com / Guletbaa2@","timestamp":"2025-09-19T09:47:44.624Z"}
+{"level":"info","message":"Connected to PostgreSQL database","timestamp":"2025-09-19T09:49:54.315Z"}
+{"level":"info","message":"Sample events created.","timestamp":"2025-09-19T09:49:54.445Z"}
+{"level":"info","message":"Database initialized successfully.","timestamp":"2025-09-19T09:49:54.457Z"}
+{"level":"info","message":"Connect Kenya server running on http://localhost:3000","timestamp":"2025-09-19T09:49:54.460Z"}
+{"level":"info","message":"Admin credentials: luttareagan22@gmail.com / Guletbaa2@","timestamp":"2025-09-19T09:49:54.461Z"}
+{"level":"info","message":"Connected to PostgreSQL database","timestamp":"2025-09-19T09:54:51.598Z"}
+{"level":"info","message":"Sample events created.","timestamp":"2025-09-19T09:54:51.728Z"}
+{"level":"info","message":"Database initialized successfully.","timestamp":"2025-09-19T09:54:51.753Z"}
+{"level":"info","message":"Connect Kenya server running on http://localhost:3000","timestamp":"2025-09-19T09:54:51.756Z"}
+{"level":"info","message":"Admin credentials: luttareagan22@gmail.com / Guletbaa2@","timestamp":"2025-09-19T09:54:51.756Z"}
+{"level":"info","message":"Connected to PostgreSQL database","timestamp":"2025-09-19T09:56:41.892Z"}
+{"level":"info","message":"Sample events created.","timestamp":"2025-09-19T09:56:42.024Z"}
+{"level":"info","message":"Database initialized successfully.","timestamp":"2025-09-19T09:56:42.038Z"}
+{"level":"info","message":"Connect Kenya server running on http://localhost:3000","timestamp":"2025-09-19T09:56:42.041Z"}
+{"level":"info","message":"Admin credentials: luttareagan22@gmail.com / Guletbaa2@","timestamp":"2025-09-19T09:56:42.041Z"}
+{"level":"info","message":"Catch-all route hit","path":"/favicon.ico","timestamp":"2025-09-19T09:56:56.577Z"}
+{"level":"info","message":"Catch-all route hit","path":"/favicon.ico","timestamp":"2025-09-19T09:57:00.218Z"}
+{"level":"info","message":"Connected to PostgreSQL database","timestamp":"2025-09-19T10:01:00.584Z"}
+{"level":"info","message":"Sample events created.","timestamp":"2025-09-19T10:01:00.722Z"}
+{"level":"info","message":"Database initialized successfully.","timestamp":"2025-09-19T10:01:00.744Z"}
+{"level":"info","message":"Connect Kenya server running on http://localhost:3000","timestamp":"2025-09-19T10:01:00.747Z"}
+{"level":"info","message":"Admin credentials: luttareagan22@gmail.com / Guletbaa2@","timestamp":"2025-09-19T10:01:00.747Z"}
+{"level":"info","message":"Connected to PostgreSQL database","timestamp":"2025-09-19T10:03:56.336Z"}
+{"level":"info","message":"Sample events created.","timestamp":"2025-09-19T10:03:56.470Z"}
+{"level":"info","message":"Database initialized successfully.","timestamp":"2025-09-19T10:03:56.485Z"}
+{"level":"info","message":"Connect Kenya server running on http://localhost:3000","timestamp":"2025-09-19T10:03:56.488Z"}
+{"level":"info","message":"Admin credentials: luttareagan22@gmail.com / Guletbaa2@","timestamp":"2025-09-19T10:03:56.488Z"}
+{"level":"info","message":"Connected to PostgreSQL database","timestamp":"2025-09-19T11:21:07.753Z"}
+{"level":"info","message":"Sample events created.","timestamp":"2025-09-19T11:21:07.915Z"}
+{"level":"info","message":"Database initialized successfully.","timestamp":"2025-09-19T11:21:07.917Z"}
+{"level":"info","message":"Connect Kenya server running on http://localhost:3000","timestamp":"2025-09-19T11:21:07.920Z"}
+{"level":"info","message":"Admin credentials: luttareagan22@gmail.com / Guletbaa2@","timestamp":"2025-09-19T11:21:07.920Z"}
+{"level":"info","message":"Connected to PostgreSQL database","timestamp":"2025-09-19T11:37:40.116Z"}
+{"level":"info","message":"Database initialized successfully.","timestamp":"2025-09-19T11:37:40.218Z"}
+{"level":"info","message":"Connect Kenya server running on http://localhost:3000","timestamp":"2025-09-19T11:37:40.221Z"}
+{"level":"info","message":"Admin credentials: luttareagan22@gmail.com / Guletbaa2@","timestamp":"2025-09-19T11:37:40.221Z"}
+{"level":"info","message":"Catch-all route hit","path":"/favicon.ico","timestamp":"2025-09-19T11:37:54.290Z"}
+{"level":"info","message":"Catch-all route hit","path":"/favicon.ico","timestamp":"2025-09-19T11:37:57.511Z"}
+{"level":"info","message":"Catch-all route hit","path":"/favicon.ico","timestamp":"2025-09-19T11:38:08.976Z"}
+{"level":"info","message":"Catch-all route hit","path":"/favicon.ico","timestamp":"2025-09-19T11:38:10.099Z"}
+{"level":"info","message":"Catch-all route hit","path":"/favicon.ico","timestamp":"2025-09-19T11:38:10.689Z"}
+{"level":"info","message":"Catch-all route hit","path":"/favicon.ico","timestamp":"2025-09-19T11:38:18.114Z"}
+{"level":"info","message":"Connected to PostgreSQL database","timestamp":"2025-09-19T12:33:17.825Z"}
+{"level":"info","message":"Database initialized successfully.","timestamp":"2025-09-19T12:33:17.949Z"}
+{"level":"info","message":"Connect Kenya server running on http://localhost:3000","timestamp":"2025-09-19T12:33:17.957Z"}
+{"level":"info","message":"Admin credentials: luttareagan22@gmail.com / Guletbaa2@","timestamp":"2025-09-19T12:33:17.958Z"}
+{"level":"info","message":"Connected to PostgreSQL database","timestamp":"2025-09-19T12:46:36.300Z"}
+{"level":"info","message":"Database initialized successfully.","timestamp":"2025-09-19T12:46:36.407Z"}
+{"level":"info","message":"Connect Kenya server running on http://localhost:3000","timestamp":"2025-09-19T12:46:36.410Z"}
+{"level":"info","message":"Admin credentials: luttareagan22@gmail.com / Guletbaa2@","timestamp":"2025-09-19T12:46:36.411Z"}
+{"level":"info","message":"Catch-all route hit","path":"/favicon.ico","timestamp":"2025-09-19T12:46:52.318Z"}
+{"level":"info","message":"Catch-all route hit","path":"/favicon.ico","timestamp":"2025-09-19T12:47:01.652Z"}
+{"level":"info","message":"Connected to PostgreSQL database","timestamp":"2025-09-19T12:54:17.228Z"}
+{"level":"info","message":"Database initialized successfully.","timestamp":"2025-09-19T12:54:17.333Z"}
+{"level":"info","message":"Connect Kenya server running on http://localhost:3000","timestamp":"2025-09-19T12:54:17.336Z"}
+{"level":"info","message":"Admin credentials: luttareagan22@gmail.com / Guletbaa2@","timestamp":"2025-09-19T12:54:17.336Z"}
+{"level":"info","message":"Connected to PostgreSQL database","timestamp":"2025-09-19T13:04:10.272Z"}
+{"level":"info","message":"Database initialized successfully.","timestamp":"2025-09-19T13:04:10.380Z"}
+{"level":"info","message":"Connect Kenya server running on http://localhost:3000","timestamp":"2025-09-19T13:04:10.385Z"}
+{"level":"info","message":"Admin credentials: luttareagan22@gmail.com / Guletbaa2@","timestamp":"2025-09-19T13:04:10.386Z"}
+{"level":"info","message":"Database initialized successfully.","timestamp":"2025-09-19T13:44:16.102Z"}
+{"level":"info","message":"Connect Kenya server running on http://localhost:3000","timestamp":"2025-09-19T13:44:16.113Z"}
+{"level":"info","message":"Admin credentials: luttareagan22@gmail.com / (your configured password)","timestamp":"2025-09-19T13:44:16.113Z"}
