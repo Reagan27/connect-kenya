@@ -1323,11 +1323,11 @@ function clearAllFavorites() {
     }
 }
 
-// ==================== KEYBOARD SHORTCUTS ====================
+
 
 function setupKeyboardShortcuts() {
     document.addEventListener('keydown', (e) => {
-        // Ctrl/Cmd + K for search
+        
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
             e.preventDefault();
             const searchInput = document.getElementById('enhancedEventSearch');
@@ -1337,12 +1337,12 @@ function setupKeyboardShortcuts() {
             }
         }
         
-        // Escape to close modals
+    
         if (e.key === 'Escape') {
             closeModal();
         }
         
-        // Ctrl/Cmd + F for favorites
+        
         if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
             e.preventDefault();
             showMyFavorites();
@@ -1359,11 +1359,11 @@ function setupKeyboardShortcuts() {
 
 const originalFilterEvents = window.filterEvents;
 window.filterEvents = async function() {
-    // Call original filter function first
+    
     if (originalFilterEvents) {
         await originalFilterEvents();
     } else {
-        // Fallback if original doesn't exist
+        
         const filters = {
             county: document.getElementById('county')?.value || '',
             area: document.getElementById('area')?.value || '',
@@ -1373,10 +1373,10 @@ window.filterEvents = async function() {
         await loadEvents(filters);
     }
     
-    // Apply our additional filters
+
     applyAdditionalFilters();
     
-    // Update display
+    
     if (enhancedState.currentView === 'calendar') {
         renderCalendar();
     } else {
@@ -1384,17 +1384,15 @@ window.filterEvents = async function() {
     }
 };
 
-// ==================== ENHANCED DISPLAY INTEGRATION ====================
 
-// Override displayEvents to add our enhancements
 const originalDisplayEvents = window.displayEvents;
 window.displayEvents = function(events) {
-    // Call original display function
+    
     if (originalDisplayEvents) {
         originalDisplayEvents(events);
     }
     
-    // Add our enhancements after a short delay to ensure DOM is ready
+    
     setTimeout(() => {
         addFavoriteButtons();
         addEventEnhancements();
@@ -1402,9 +1400,9 @@ window.displayEvents = function(events) {
 };
 
 function addEventEnhancements() {
-    // Add hover effects and additional interactions to event cards
+    
     document.querySelectorAll('.event-card').forEach(card => {
-        if (card.dataset.enhanced) return; // Already enhanced
+        if (card.dataset.enhanced) return; 
         card.dataset.enhanced = 'true';
         
         // Add smooth hover animations
