@@ -4,6 +4,15 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 
+
+
+const multer = require('multer');
+const sharp = require('sharp');
+const { v4: uuidv4 } = require('uuid');
+const path = require('path');
+const fs = require('fs').promises;
+
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -283,7 +292,7 @@ async function initDB() {
                     max_attendees: 80,
                     location: "Merica Hotel Conference Center",
                     contact: "+254733000002",
-                    status: "pending", // Changed to pending for testing Approve button
+                    status: "pending", 
                     is_vip: false,
                     mpesa_code: "SAMPLE005"
                 }
@@ -323,9 +332,7 @@ async function initDB() {
     }
 }
 
-// API Routes
 
-// Login
 app.post('/api/login', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -438,7 +445,7 @@ app.post('/api/events', async (req, res) => {
     }
 });
 
-// Join Event (Increment attendees)
+
 app.post('/api/events/:id/join', async (req, res) => {
     try {
         const { id } = req.params;
@@ -458,7 +465,7 @@ app.post('/api/events/:id/join', async (req, res) => {
     }
 });
 
-// Admin: Get All Events
+
 app.get('/api/admin/events', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM events ORDER BY created_at DESC');
@@ -469,7 +476,7 @@ app.get('/api/admin/events', async (req, res) => {
     }
 });
 
-// Admin: Update Event
+
 app.put('/api/admin/events/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -495,7 +502,7 @@ app.put('/api/admin/events/:id', async (req, res) => {
     }
 });
 
-// Admin: Delete Event
+
 app.delete('/api/admin/events/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -507,7 +514,7 @@ app.delete('/api/admin/events/:id', async (req, res) => {
     }
 });
 
-// Admin: Get Users
+
 app.get('/api/admin/users', async (req, res) => {
     try {
         const result = await pool.query('SELECT id, name, email, phone, created_at FROM users WHERE role != \'admin\'');
@@ -518,7 +525,7 @@ app.get('/api/admin/users', async (req, res) => {
     }
 });
 
-// Admin: Delete User
+
 app.delete('/api/admin/users/:id', async (req, res) => {
     try {
         const { id } = req.params;

@@ -736,7 +736,7 @@ function addFavoriteButtons() {
         favoriteBtn.style.cssText = `
             position: absolute;
             top: 10px;
-            right: 50px;
+            right: 10px;
             background: rgba(255,255,255,0.9);
             border: none;
             width: 35px;
@@ -1405,7 +1405,7 @@ function addEventEnhancements() {
         if (card.dataset.enhanced) return; 
         card.dataset.enhanced = 'true';
         
-        // Add smooth hover animations
+      
         card.addEventListener('mouseenter', function() {
             this.style.transform = 'translateY(-10px) scale(1.02)';
             this.style.transition = 'all 0.3s ease';
@@ -1458,7 +1458,7 @@ function trackUserAction(action, details = {}) {
     }
 }
 
-// Track common actions
+
 const originalToggleFavorite = toggleFavorite;
 toggleFavorite = function(eventId) {
     trackUserAction('favorite_toggle', { eventId });
@@ -1472,13 +1472,11 @@ performEnhancedSearch = function() {
     return originalPerformEnhancedSearch();
 };
 
-// ==================== INITIALIZATION CHECK ====================
 
-// Ensure we don't conflict with existing functionality
 window.addEventListener('load', () => {
-    // Wait a bit for the main app to fully load
+   
     setTimeout(() => {
-        // Check if main functions exist and enhance them
+ 
         if (typeof window.showEventDetails === 'function' && !window.showEventDetails.enhanced) {
             window.showEventDetails.enhanced = true;
         }
@@ -1487,7 +1485,7 @@ window.addEventListener('load', () => {
             window.joinEvent.enhanced = true;
         }
         
-        // Initialize features that depend on DOM being ready
+      
         if (document.getElementById('eventsContainer')) {
             addFavoriteButtons();
         }
