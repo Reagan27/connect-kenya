@@ -63,6 +63,36 @@
             list-style: none;
             gap: 2rem;
             align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links.mobile-menu {
+            position: fixed;
+            top: 80px;
+            right: 0;
+            width: 100%;
+            height: calc(100vh - 80px);
+            background: white;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 2rem;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            transform: translateX(100%);
+            z-index: 999;
+        }
+
+        .nav-links.mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #1e3c72;
+            cursor: pointer;
+            padding: 10px;
         }
 
         .nav-links a {
@@ -664,11 +694,54 @@
             color: white;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
+       
+       @media (max-width: 768px) {
+         .hero h1 {
+            font-size: 2.5rem;
+        }
+        
+        .hero-stats {
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .mobile-menu-toggle {
+            display: block;
+        }
+        
+        .nav-links {
+            display: none;
+        }
+        
+        .nav-links.mobile-menu {
+            display: flex;
+        }
+        
+        .filter-container {
+            grid-template-columns: 1fr;
+        }
+        
+        .events-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .admin-sidebar {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .admin-sidebar.open {
+            transform: translateX(0);
+        }
+
+        .admin-content {
+            margin-left: 0;
+        }
+          
             
             .hero-stats {
                 flex-direction: column;
@@ -1013,32 +1086,35 @@
     <div id="mainApp" >
        
         <header class="header">
-            <nav class="nav container">
-                <a href="#" class="logo">
-                    <i class="fas fa-users"></i>
-                    Connect Kenya
-                </a>
-                <ul class="nav-links">
-                    <li><a href="#events">Events</a></li>
-                    <li><a href="#categories">Categories</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="#" onclick="showCreateEventModal()" class="btn-secondary">Create Event</a></li>
-                    <li><a href="#" class="btn-primary" id="userNameDisplay" onclick="currentUser ? logout() : showView('login')">Login</a></li>
-                </ul>
-            </nav>
-        </header>
+        <nav class="nav container">
+            <a href="#" class="logo">
+                <i class="fas fa-users"></i>
+                Connect Kenya
+            </a>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#events" onclick="closeMobileMenu()">Events</a></li>
+                <li><a href="#categories" onclick="closeMobileMenu()">Categories</a></li>
+                <li><a href="#about" onclick="closeMobileMenu()">About</a></li>
+                <li><a href="#contact" onclick="closeMobileMenu()">Contact</a></li>
+                <li><a href="#" onclick="showCreateEventModal(); closeMobileMenu()" class="btn-secondary">Create Event</a></li>
+                <li><a href="#" class="btn-primary" id="userNameDisplay" onclick="currentUser ? logout() : showView('login'); closeMobileMenu()">Login</a></li>
+            </ul>
+        </nav>
+    </header>
 
        
         <section class="hero">
             <div class="container">
                 <h1>Connect Kenya</h1>
-<p>
-    Connect Kenya is your all-in-one platform to explore and create events, activities, and opportunities across Kenya. From fun meetups to professional networking, this is where communities and businesses connect.
-</p>
-<p style="font-size: 0.95rem; color: #ff3b3b; margin-top: 0.5rem; font-weight: 600;">
-    Share your events and services to reach thousands of active members.
-</p>
+    <p>
+        Connect Kenya is your all-in-one platform to explore and create events, activities, and opportunities across Kenya. From fun meetups to professional networking, this is where communities and businesses connect.
+    </p>
+    <p style="font-size: 0.95rem; color: #ff3b3b; margin-top: 0.5rem; font-weight: 600;">
+        Share your events and services to reach thousands of active members.
+    </p>
 
 
                    
@@ -1308,6 +1384,21 @@
                     <input type="text" id="mpesaCode" required placeholder="e.g., QK12345678" maxlength="20">
                     <small style="color: #666;">Enter the M-Pesa transaction code after making payment</small>
                 </div>
+
+                
+        <div class="form-group">
+            <label for="eventMedia">Event Photos/Videos (Optional)</label>
+            <div id="mediaUploadSection">
+                <input type="file" id="mediaFileInput" accept="image/*,video/*" multiple style="display: none;">
+                <button type="button" onclick="document.getElementById('mediaFileInput').click()" 
+                        style="background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; margin-bottom: 1rem;">
+                    <i class="fas fa-camera"></i> Add Photos/Videos
+                </button>
+                <div id="mediaPreviewContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; margin-top: 1rem;">
+                </div>
+            </div>
+            <small style="color: #666;">You can upload multiple images and videos. First image will be used as the event cover.</small>
+        </div>
 
                 <div style="text-align: center; margin-top: 2rem;">
                     <button type="submit" class="btn-primary" style="padding: 15px 40px; font-size: 1.1rem;">
@@ -1774,6 +1865,7 @@ function closeCreateEventModal() {
     clearAlert('createEventAlert');
 }
 
+// Replace the existing createEventForm event listener with this updated version:
 document.getElementById('createEventForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const eventData = {
@@ -1792,7 +1884,9 @@ document.getElementById('createEventForm').addEventListener('submit', async func
         mpesa_code: document.getElementById('mpesaCode').value,
         organizer: currentUser.name,
         organizer_id: currentUser.id,
-        icon: getEventIcon(document.getElementById('eventCategory').value)
+        icon: getEventIcon(document.getElementById('eventCategory').value),
+        
+        eventMedia: JSON.stringify(uploadedMediaFiles)
     };
 
     if (!eventData.title || !eventData.category || !eventData.description || !eventData.county || !eventData.area || !eventData.date || !eventData.mpesa_code) {
@@ -1810,6 +1904,9 @@ document.getElementById('createEventForm').addEventListener('submit', async func
         if (data.success) {
             allEvents.push(data.event);
             showAlert('createEventAlert', 'Event submitted successfully! It will be reviewed within 24 hours.', 'success');
+           
+            uploadedMediaFiles = [];
+            updateMediaPreview();
             setTimeout(() => {
                 closeCreateEventModal();
                 if (currentUser.role === 'admin') {
@@ -1826,7 +1923,7 @@ document.getElementById('createEventForm').addEventListener('submit', async func
     }
 });
 
-// Helper Functions
+
 function getEventIcon(category) {
     const icons = {
         'sports': 'fa-running',
@@ -2106,7 +2203,7 @@ function updatePendingEvents() {
     `).join('');
 }
 
-// Admin Actions
+
 async function approveEvent(eventId) {
     try {
         const response = await fetch(`/api/admin/events/${eventId}`, {
@@ -2193,6 +2290,86 @@ async function deleteUser(userId) {
     }
 }
 
+
+
+let uploadedMediaFiles = [];
+
+document.getElementById('mediaFileInput').addEventListener('change', async function(e) {
+    const files = Array.from(e.target.files);
+    
+    for (const file of files) {
+        if (file.size > 50 * 1024 * 1024) { 
+            alert(`File ${file.name} is too large. Maximum size is 50MB.`);
+            continue;
+        }
+        
+        const formData = new FormData();
+        formData.append('media', file);
+        
+        try {
+            const response = await fetch('/api/upload-media', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const result = await response.json();
+            if (result.success) {
+                uploadedMediaFiles.push({
+                    id: result.fileId,
+                    filePath: result.filePath,
+                    thumbnailPath: result.thumbnailPath,
+                    fileName: result.fileName,
+                    fileType: result.fileType,
+                    isPrimary: uploadedMediaFiles.length === 0 
+                });
+                updateMediaPreview();
+            } else {
+                alert('Upload failed: ' + result.message);
+            }
+        } catch (error) {
+            alert('Upload error: ' + error.message);
+        }
+    }
+});
+
+function updateMediaPreview() {
+    const container = document.getElementById('mediaPreviewContainer');
+    container.innerHTML = uploadedMediaFiles.map((media, index) => `
+        <div class="media-preview-item" style="position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            ${media.fileType.startsWith('image/') ? 
+                `<img src="${media.thumbnailPath}" style="width: 100%; height: 80px; object-fit: cover;">` :
+                `<div style="width: 100%; height: 80px; background: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-video" style="font-size: 2rem; color: #666;"></i>
+                </div>`
+            }
+            <div style="position: absolute; top: 5px; right: 5px; display: flex; gap: 5px;">
+                ${media.isPrimary ? '<span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 10px; font-size: 0.7rem;">Cover</span>' : ''}
+                <button type="button" onclick="removeMedia(${index})" 
+                        style="background: #dc3545; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 0.7rem; cursor: pointer;">×</button>
+            </div>
+            <div style="padding: 5px; background: white; font-size: 0.7rem; text-align: center;">${media.fileName.substring(0, 15)}...</div>
+        </div>
+    `).join('');
+}
+
+function removeMedia(index) {
+    const media = uploadedMediaFiles[index];
+    
+  
+    fetch(`/api/delete-media/${media.id}`, { method: 'DELETE' })
+        .catch(err => console.error('Delete error:', err));
+    
+  
+    uploadedMediaFiles.splice(index, 1);
+    
+    
+    if (uploadedMediaFiles.length > 0 && !uploadedMediaFiles.some(m => m.isPrimary)) {
+        uploadedMediaFiles[0].isPrimary = true;
+    }
+    
+    updateMediaPreview();
+}
+
 function editEvent(eventId) {
     const event = allEvents.find(e => e.id === eventId);
     if (!event) return;
@@ -2239,7 +2416,51 @@ document.getElementById('editEventForm').addEventListener('submit', async functi
     }
 });
 
-// Modal Window Management
+
+function toggleMobileMenu() {
+    const navLinks = document.getElementById('navLinks');
+    const toggleBtn = document.querySelector('.mobile-menu-toggle i');
+    
+    navLinks.classList.toggle('mobile-menu');
+    navLinks.classList.toggle('active');
+    
+    
+    if (navLinks.classList.contains('active')) {
+        toggleBtn.className = 'fas fa-times';
+    } else {
+        toggleBtn.className = 'fas fa-bars';
+    }
+}
+
+function closeMobileMenu() {
+    const navLinks = document.getElementById('navLinks');
+    const toggleBtn = document.querySelector('.mobile-menu-toggle i');
+    
+    navLinks.classList.remove('mobile-menu');
+    navLinks.classList.remove('active');
+    toggleBtn.className = 'fas fa-bars';
+}
+
+
+document.addEventListener('click', function(e) {
+    const navLinks = document.getElementById('navLinks');
+    const toggleBtn = document.querySelector('.mobile-menu-toggle');
+    
+    if (navLinks.classList.contains('active') && 
+        !navLinks.contains(e.target) && 
+        !toggleBtn.contains(e.target)) {
+        closeMobileMenu();
+    }
+});
+
+
+window.addEventListener('resize', function() {
+    if (window.innerWidth > 768) {
+        closeMobileMenu();
+    }
+});
+
+
 window.onclick = function(event) {
     const modals = ['eventModal', 'createEventModal', 'editEventModal'];
     modals.forEach(modalId => {
@@ -2335,6 +2556,7 @@ if (currentUser && !localStorage.getItem(`welcomed_${currentUser.id}`)) {
 }
 
 console.log('Connect Kenya Platform Initialized!');
+
 </script>
 <script src="enhanced-features.js"></script>
 <script src="enhanced-join.js"></script>

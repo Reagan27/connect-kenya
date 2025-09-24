@@ -3,6 +3,8 @@ const { Pool } = require('pg');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
+const { addMediaTables, setupMediaEndpoints } = require('./public/media-upload.js');
+
 
 
 
@@ -11,6 +13,9 @@ const sharp = require('sharp');
 const { v4: uuidv4 } = require('uuid');
 const path = require('path');
 const fs = require('fs').promises;
+
+
+
 
 
 const app = express();
@@ -489,10 +494,10 @@ app.put('/api/admin/events/:id', async (req, res) => {
         });
         setClause = setClause.slice(0, -2);
         const result = await pool.query(
-            `UPDATE events SET ${setClause}, updated_at = CURRENT_TIMESTAMP WHERE id = $${params.length + 1} RETURNING *`,
+            `UPDATE events SET ${setClause} WHERE id = $${params.length + 1} RETURNING *`,
             [...params, id]
         );
-        if (result.rows.length === 0) {
+         if (result.rows.length === 0) {
             return res.status(404).json({ success: false, message: 'Event not found' });
         }
         res.json({ success: true, event: result.rows[0] });
@@ -538,7 +543,131 @@ app.delete('/api/admin/users/:id', async (req, res) => {
     }
 });
 
-initDB().then(() => {
+
+
+
+app.get('/api/events/:id/comments', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await pool.query(
+            'SELECT * FROM event_comments WHERE event_id = $1 ORDER BY created_at DESC',
+            [id]
+        );
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Get comments error:', err);
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+});
+
+app.post('/api/events/:id/comments', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { name, phone, comment } = req.body;
+        
+        if (!name || !phone || !comment) {
+            return res.status(400).json({ success: false, message: 'All fields required' });
+        }
+        
+        await pool.query(
+            'INSERT INTO event_comments (event_id, commenter_name, commenter_phone, comment_text) VALUES ($1, $2, $3, $4)',
+            [id, name, phone, comment]
+        );
+        
+        res.json({ success: true });
+    } catch (err) {
+        console.error('Add comment error:', err);
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+});
+
+
+app.get('/api/events/:id/reviews', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await pool.query(
+            'SELECT * FROM event_reviews WHERE event_id = $1 ORDER BY created_at DESC',
+            [id]
+        );
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Get reviews error:', err);
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+});
+
+app.post('/api/events/:id/review', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { name, phone, rating, review } = req.body;
+        
+        if (!name || !phone || !rating) {
+            return res.status(400).json({ success: false, message: 'Name, phone and rating required' });
+        }
+        
+        await pool.query(
+            'INSERT INTO event_reviews (event_id, attendee_name, attendee_phone, rating, review_text) VALUES ($1, $2, $3, $4, $5)',
+            [id, name, phone, rating, review || null]
+        );
+        
+        res.json({ success: true });
+    } catch (err) {
+        console.error('Add review error:', err);
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+});
+
+
+app.get('/api/events/search', async (req, res) => {
+    try {
+        const { q } = req.query;
+        if (!q) {
+            return res.json([]);
+        }
+        
+        const result = await pool.query(
+            `SELECT * FROM events WHERE status = 'approved' 
+             AND (title ILIKE $1 OR description ILIKE $1 OR organizer ILIKE $1 OR county ILIKE $1 OR area ILIKE $1)
+             ORDER BY is_vip DESC, date ASC`,
+            [`%${q}%`]
+        );
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Search error:', err);
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+});
+
+initDB().then(async () => {
+    
+    await addMediaTables(pool);
+    
+   
+    await pool.query(`
+        CREATE TABLE IF NOT EXISTS event_comments (
+            id SERIAL PRIMARY KEY,
+            event_id INTEGER REFERENCES events(id) ON DELETE CASCADE,
+            commenter_name VARCHAR(255) NOT NULL,
+            commenter_phone VARCHAR(20) NOT NULL,
+            comment_text TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `);
+    
+    await pool.query(`
+        CREATE TABLE IF NOT EXISTS event_reviews (
+            id SERIAL PRIMARY KEY,
+            event_id INTEGER REFERENCES events(id) ON DELETE CASCADE,
+            attendee_name VARCHAR(255) NOT NULL,
+            attendee_phone VARCHAR(20) NOT NULL,
+            rating INTEGER CHECK (rating >= 1 AND rating <= 5),
+            review_text TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `);
+    
+    console.log('All tables created successfully');
+    
     app.listen(PORT, () => {
         console.log(`Connect Kenya server running on http://localhost:${PORT}`);
     });
